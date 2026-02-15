@@ -1,0 +1,114 @@
+body {
+  margin: 0;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+
+#wrapper {
+  width: min(95vw, 720px);
+  aspect-ratio: 720 / 1073;
+  max-height: 95vh;
+  background: #222;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 10px 0;
+  color: #fff;
+}
+
+#gameArea {
+  position: relative;
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#bgLayer {
+  position: absolute;
+  inset: 0;
+  background: url("stage1.jpg") center / contain no-repeat;
+  background-color: #111; /* 余白が出たとき用 */
+  z-index: 0;
+}
+
+
+#game {
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  width: 60%;
+  max-width: 520px;
+  gap: 3px;
+}
+
+
+/* 削れてないブロック（かなり濃く） */
+.cell {
+  background: rgba(10, 6, 10, 0.884);
+  border: 1px solid rgba(255,255,255,0.2);
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.2s;
+}
+
+/* 削れたブロック */
+.cell.open {
+  background: rgba(255, 255, 255, 0.247);
+  color: white;
+}
+
+.cell.mine {
+  background: crimson;
+}
+
+.cell.flag {
+  background: rgba(165, 44, 189, 0.726);
+}
+
+#message {
+  margin: 10px;
+  font-size: 18px;
+color: #fff;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 5px;
+  width: 10rem;
+  margin: 2px auto;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .cell {
+    font-size: 14px;
+  }
+}
