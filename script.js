@@ -23,17 +23,17 @@ const resetBtn = document.getElementById("reset");
 let board = [];
 let gameOver = false;
 let currentStage = 0;
-let hintCount = 4;
+let hintCount = 6;
 
 function init() {
-  bgLayer.style.filter = "brightness(0.7)";
+  bgLayer.style.filter = "brightness(1)";
 
   game.innerHTML = "";
   board = [];
   gameOver = false;
-  hintCount = 4;
+  hintCount = 6;
 
-  message.textContent = `ステージ ${currentStage + 1}　ヒント残り: 4`;
+  message.textContent = `ステージ ${currentStage + 1}　ヒント残り: 6`;
   bgLayer.style.backgroundImage = `url(${stages[currentStage]})`;
 
   for (let y = 0; y < SIZE; y++) {
@@ -82,12 +82,36 @@ function init() {
       const cell = document.createElement("div");
       cell.classList.add("cell");
 
+      // PCクリック
       cell.addEventListener("click", () => openCell(x, y));
 
+      // PC右クリック
       cell.addEventListener("contextmenu", (e) => {
         e.preventDefault();
         toggleFlag(x, y);
       });
+
+      // ▼▼▼ スマホ用長押し ▼▼▼
+      let pressTimer;
+      let isLongPress = false;
+
+      cell.addEventListener("touchstart", (e) => {
+        isLongPress = false;
+
+        pressTimer = setTimeout(() => {
+          isLongPress = true;
+          toggleFlag(x, y);
+        }, 250); // ←ここで長押し時間調整（今250ms）
+      });
+
+      cell.addEventListener("touchend", (e) => {
+        clearTimeout(pressTimer);
+
+        if (!isLongPress) {
+          openCell(x, y);
+        }
+      });
+
 
       game.appendChild(cell);
     }
@@ -105,9 +129,9 @@ function toggleFlag(x, y) {
 
   cellData.flag = !cellData.flag;
   cell.classList.toggle("flag");
-  cell.textContent = cellData.flag ? "🚩" : "";
-flagSound.currentTime = 0;
-flagSound.play();
+  cell.textContent = cellData.flag ? "❤" : "";
+  flagSound.currentTime = 0;
+  flagSound.play();
 }
 
 function openCell(x, y) {
@@ -118,9 +142,9 @@ function openCell(x, y) {
   if (cellData.open || cellData.flag) return;
 
   if (openSound) {
-  openSound.currentTime = 0;
-  openSound.play();
-}
+    openSound.currentTime = 0;
+    openSound.play();
+  }
 
   const index = y * SIZE + x;
   const cell = game.children[index];
@@ -182,20 +206,30 @@ function checkWin() {
 }
 
 function stageClear() {
-  bgLayer.style.filter = "brightness(1)";
-
-  clearSound.currentTime = 0;
-clearSound.play();
-
   gameOver = true;
 
-  for (let cell of game.children) {
-    cell.style.opacity = "0";
-  }
+  clearSound.currentTime = 0;
+  clearSound.play();
 
-  message.textContent = `ステージ ${currentStage + 1} クリア！`;
+  const effect = document.getElementById("clearEffect");
+  effect.classList.add("show");
+
+  // セルを順番に消す演出
+  let i = 0;
+  const cells = [...game.children];
+
+  const interval = setInterval(() => {
+    if (i >= cells.length) {
+      clearInterval(interval);
+      return;
+    }
+    cells[i].style.opacity = "0";
+    i++;
+  }, 20);
 
   setTimeout(() => {
+    effect.classList.remove("show");
+
     currentStage++;
     if (currentStage < stages.length) {
       init();
@@ -205,11 +239,29 @@ clearSound.play();
   }, 2000);
 }
 
+
 function finalClear() {
-  bgLayer.style.backgroundImage = `url(${rewardImage})`;
-  game.innerHTML = "";
-  message.textContent = "完全クリア！！🎉";
+  gameOver = true;
+
+  const effect = document.getElementById("finalEffect");
+  const wrapper = document.getElementById("wrapper");
+
+  // フラッシュ
+  wrapper.classList.add("flash");
+
+  // COMPLETE表示
+  effect.classList.add("show");
+
+  setTimeout(() => {
+    effect.classList.remove("show");
+
+    // ご褒美画像表示
+    bgLayer.style.backgroundImage = `url(${rewardImage})`;
+    game.innerHTML = "";
+    message.textContent = "完全クリア！！🎉";
+  }, 2000);
 }
+
 
 resetBtn.addEventListener("click", () => {
   currentStage = 0;

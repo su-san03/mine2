@@ -10,9 +10,10 @@ body {
 
 
 #wrapper {
-  width: min(95vw, 720px);
-  aspect-ratio: 720 / 1073;
-  max-height: 95vh;
+  width: min(100vw, 720px);
+  /* aspect-ratio: 720 / 1073; */
+    aspect-ratio: 603 / 1073;
+  max-height: 99vh;
   background: #222;
   border-radius: 10px;
 
@@ -23,6 +24,7 @@ body {
 h1 {
   margin: 10px 0;
   color: #fff;
+  text-align: center;
 }
 
 #gameArea {
@@ -49,9 +51,9 @@ h1 {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
   grid-template-rows: repeat(9, 1fr);
-  width: 60%;
-  max-width: 520px;
-  gap: 3px;
+  width: 86%;
+  max-width: 455px;
+  gap: 4px;
 }
 
 
@@ -72,8 +74,9 @@ h1 {
 
 /* 削れたブロック */
 .cell.open {
-  background: rgba(255, 255, 255, 0.247);
-  color: white;
+  background: rgba(255, 255, 255, 0.4);
+  color: #333;
+  text-shadow: #ffffff 0 0 10px;
 }
 
 .cell.mine {
@@ -88,6 +91,7 @@ h1 {
   margin: 10px;
   font-size: 18px;
 color: #fff;
+text-align: center;
 }
 
 button {
@@ -111,4 +115,58 @@ button {
   .cell {
     font-size: 14px;
   }
+}
+
+#clearEffect {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  font-weight: bold;
+  color: gold;
+  text-shadow: 0 0 20px yellow;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  transition: 0.6s;
+  z-index: 5;
+}
+
+#clearEffect.show {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+#finalEffect {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 48px;
+  font-weight: bold;
+  color: gold;
+  text-shadow: 0 0 30px yellow;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
+  transition: 0.8s;
+  z-index: 10;
+}
+
+#finalEffect.show {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* 画面フラッシュ */
+.flash {
+  animation: flash 0.5s;
+}
+
+@keyframes flash {
+  0% { background-color: white; }
+  100% { background-color: transparent; }
 }
