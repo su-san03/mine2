@@ -1,0 +1,7 @@
+AuthUserFile /srv/data/web/vhosts/yourvirtalhostname/.htpasswd
+AuthName "Please enter your ID and Password."
+AuthType Basic
+
+<limit GET POST>
+require valid-user
+</limit>
