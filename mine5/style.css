@@ -1,0 +1,214 @@
+body {
+  margin: 0;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: sans-serif;
+}
+
+
+#wrapper {
+  width: min(100vw, 720px);
+  /* aspect-ratio: 720 / 1073; */
+    aspect-ratio: 603 / 1073;
+  max-height: 99vh;
+  background: #222;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 10px 0;
+  color: #fff;
+  text-align: center;
+}
+
+#gameArea {
+  position: relative;
+  flex: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#bgLayer {
+  position: absolute;
+  inset: 0;
+  background: url("stage1.jpg") center / contain no-repeat;
+  background-color: #111; /* 余白が出たとき用 */
+  z-index: 0;
+}
+
+
+#game {
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  width: 86%;
+  max-width: 455px;
+  gap: 4px;
+}
+
+
+/* 削れてないブロック（かなり濃く） */
+.cell {
+  background: rgba(7, 7, 7, 0.096); /* 少し暗くする */
+  backdrop-filter: blur(7px) brightness(0.7);
+  -webkit-backdrop-filter: blur(10px) brightness(0.7);
+  border: 1px solid rgba(83, 83, 83, 0.404);
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.25s;
+}
+
+/* 削れたブロック */
+.cell.open {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid rgba(83, 83, 83, 0.144);
+  aspect-ratio: 1/1;
+  background: rgba(255, 255, 255, 0.192); /* 少し暗くする */
+  animation: reveal 0.25s ease;
+}
+
+@keyframes reveal {
+  0% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.number {
+  color: #1a1a1a;
+  font-weight: bold;
+  font-size: 18px;
+
+  /* 白グロー */
+  text-shadow:
+    0 0 4px rgba(255,255,255,0.9),
+    0 0 8px rgba(255,255,255,0.7),
+
+    /* 黒縁取りでコントラスト確保 */
+    0 1px 2px rgba(0,0,0,0.8);
+}
+
+.cell.mine {
+  background: crimson;
+}
+
+.cell.flag {
+  background: rgba(255, 62, 197, 0.425);
+  backdrop-filter: blur(0px) brightness(1);
+  border-radius: 5px;
+  color: #8d0000;
+}
+
+#message {
+  margin: 10px;
+  font-size: 18px;
+color: #fff;
+text-align: center;
+z-index: 999;
+}
+
+button {
+  padding: 8px 16px;
+  font-size: 14px;
+  margin: 5px;
+  width: 10rem;
+  margin: 2px auto;
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 18px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .cell {
+    font-size: 14px;
+  }
+}
+
+#clearEffect {
+  position: absolute;
+  bottom: 20%;              /* ← 下から少し上に */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 6vw;
+  font-weight: bold;
+  color: gold;
+  text-shadow: 
+    0 0 8px rgba(255,255,255,0.9),
+    0 2px 4px rgba(0,0,0,0.8);
+  opacity: 0;
+  transition: 0.6s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+#clearEffect.show {
+  opacity: 1;
+}
+
+/* 画面フラッシュ */
+.flash {
+  animation: flash 0.5s;
+}
+
+@keyframes flash {
+  0% { background-color: white; }
+  100% { background-color: transparent; }
+}
+
+
+#rewardVideo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* 画面に収める */
+  display: none;
+  background: black;
+  z-index: 3;
+}
+#rewardVideo {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+#rewardVideo.show {
+  opacity: 1;
+}
+
+#message.clearMessage {
+  font-size: 6vw;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgb(163, 0, 54);
+  animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#bgLayer {
+  transition: filter 0.3s ease;
+}
