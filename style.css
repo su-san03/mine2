@@ -97,9 +97,8 @@ text-align: center;
 button {
   padding: 8px 16px;
   font-size: 14px;
-  margin: 5px;
   width: 10rem;
-  margin: 2px auto;
+  margin: 2px;
 }
 
 @media (max-width: 480px) {
@@ -169,4 +168,9 @@ button {
 @keyframes flash {
   0% { background-color: white; }
   100% { background-color: transparent; }
+}
+.fl {
+  display: flex;
+  justify-content: space-evenly;
+
 }
