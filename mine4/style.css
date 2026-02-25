@@ -212,3 +212,7 @@ button {
 #bgLayer {
   transition: filter 0.3s ease;
 }
+
+.fl {
+  display: flex;
+}
