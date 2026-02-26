@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta name="robots" content="noindex,nofollow,noarchive" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐄マインスイーパ💛</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+  <div id="wrapper">
+    <h1>🐄マインスイーパ💛</h1>
+    <div id="clearEffect">STAGE CLEAR!</div>
+
+    <div id="gameArea">
+      <div id="bgLayer"></div>
+      <div id="game"></div>
+      <video id="rewardVideo" muted playsinline></video>
+    </div>
+
+    <div id="message"></div>
+    
+    <div class="fl">
+      <button id="nextBtn" style="display:none;">NEXT ▶</button>
+    </div>
+    
+    <div class="fl">
+      <button id="reset">リセット</button>
+      <button onclick="useHint()">ヒント</button>
+    </div>
+
+  </div>
+
+  <audio id="openSound" src="sounds/open.mp3"></audio>
+  <audio id="missSound" src="sounds/miss.mp3"></audio>
+  <audio id="flagSound" src="sounds/flag.mp3"></audio>
+  <audio id="clearSound" src="sounds/clear.mp3"></audio>
+  <audio id="finalSound" src="sounds/final.mp3" preload="auto"></audio>
+
+  <script src="./script.js"></script>
+
+</body>
+
+</html>
