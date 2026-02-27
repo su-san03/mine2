@@ -1,10 +1,10 @@
 {
-  "name": "My Block Game",
-  "short_name": "BlockGame",
+  "name": "マインスイーパ💛",
+  "short_name": "マインスイーパ",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#fcc",
+  "theme_color": "#6cc",
   "orientation": "portrait",
   "icons": [
     {
