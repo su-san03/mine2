@@ -104,6 +104,7 @@ function init() {
       let isLongPress = false;
 
       cell.addEventListener("touchstart", (e) => {
+        e.preventDefault();   // ← 追加（超重要）
         isLongPress = false;
 
         pressTimer = setTimeout(() => {
@@ -113,11 +114,14 @@ function init() {
       });
 
       cell.addEventListener("touchend", (e) => {
+        e.preventDefault();   // ← 追加
         clearTimeout(pressTimer);
 
         if (!isLongPress) {
           openCell(x, y);
         }
+
+        isLongPress = false;  // ← リセット
       });
 
 
@@ -263,6 +267,12 @@ function stageClear() {
   const video = document.getElementById("rewardVideo");
   const nextBtn = document.getElementById("nextBtn");
 
+  video.pause();
+video.style.display = "none";
+video.loop = false;
+
+nextBtn.style.display = "none";
+
   // ❌ これらは削除する
   // game.innerHTML = "";
   // bgLayer.style.backgroundImage = "none";
@@ -360,8 +370,29 @@ function finalClear() {
 }
 
 resetBtn.addEventListener("click", () => {
+  const video = document.getElementById("rewardVideo");
+  const nextBtn = document.getElementById("nextBtn");
+
+  // 動画停止
+  video.pause();
+  video.currentTime = 0;
+  video.loop = false;
+  video.style.display = "none";
+
+  // NEXT非表示
+  nextBtn.style.display = "none";
+
+  // メッセージ戻す
+  message.classList.remove("clearMessage");
+
+  // ステージを1面へ
   currentStage = 0;
+
   init();
+
+  if (currentStage < 0 || currentStage >= stages.length) {
+  currentStage = 0;
+}
 });
 
 init();
